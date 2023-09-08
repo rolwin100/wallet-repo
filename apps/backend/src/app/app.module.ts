@@ -10,7 +10,7 @@ import { Transaction } from 'src/wallet/entities/transaction.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'https://dpg-cjtdfc5htt0c73c6r8p0-a.oregon-postgres.render.com',
+      host: 'dpg-cjtdfc5htt0c73c6r8p0-a.oregon-postgres.render.com',
       port: 5432,
       username: 'wallet_wehx_user',
       password: 'CqJ1jGWCTtagF7HKXVsSCoRNRKZs5BZk',
