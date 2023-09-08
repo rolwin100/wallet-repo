@@ -8,13 +8,20 @@ import { Transaction } from 'src/wallet/entities/transaction.entity';
 
 @Module({
   imports: [
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   host: 'localhost',
+    //   port: 5432,
+    //   username: 'root',
+    //   password: 'root',
+    //   database: 'test',
+    //   entities: [Wallet, Transaction],
+    //   synchronize: true,
+    // }),
+
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'root',
-      password: 'root',
-      database: 'test',
+      type: 'sqlite',
+      database: 'walletdb',
       entities: [Wallet, Transaction],
       synchronize: true,
     }),
