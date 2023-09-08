@@ -24,14 +24,13 @@ export class Wallet {
 
   @CreateDateColumn({
     type: 'datetime',
-    default: () => 'CURRENT_TIMESTAMP(6)',
+    default: () => 'now()',
   })
   public createdAt: Date;
 
   @UpdateDateColumn({
     type: 'datetime',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    default: () => 'now()',
   })
   public updatedAt: Date;
 }
