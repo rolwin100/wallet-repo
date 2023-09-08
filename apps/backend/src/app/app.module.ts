@@ -17,6 +17,7 @@ import { Transaction } from 'src/wallet/entities/transaction.entity';
       database: 'wallet_wehx',
       entities: [Wallet, Transaction],
       synchronize: true,
+      ssl: true,
     }),
     WalletModule,
   ],
