@@ -23,14 +23,15 @@ export class Wallet {
   transaction: Transaction[];
 
   @CreateDateColumn({
-    type: 'datetime',
-    default: () => 'now()',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
   })
   public createdAt: Date;
 
   @UpdateDateColumn({
-    type: 'datetime',
-    default: () => 'now()',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
   public updatedAt: Date;
 }
