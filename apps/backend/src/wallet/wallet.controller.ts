@@ -22,6 +22,7 @@ export class WalletController {
   @Post('/setup')
   async create(@Res() res, @Body() createWalletDto: CreateWalletDto) {
     try {
+      console.log(createWalletDto);
       const wallet = await this.walletService.create(createWalletDto);
       return res.status(HttpStatus.CREATED).send({
         status: 'success',
@@ -40,11 +41,6 @@ export class WalletController {
         message: err.message,
       });
     }
-  }
-
-  @Get()
-  findAll() {
-    return this.walletService.findAll();
   }
 
   @Get('/transactions')
