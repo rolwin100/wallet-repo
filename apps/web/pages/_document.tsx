@@ -1,5 +1,5 @@
 import type { DocumentContext, DocumentInitialProps } from 'next/document'
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Main } from 'next/document'
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs'
 
 class MyDocument extends Document {
@@ -12,11 +12,11 @@ class MyDocument extends Document {
     ctx.renderPage = () =>
       originalRenderPage({
         enhanceApp: (App) => (props) =>
-          (
-            <StyleProvider cache={cache} hashPriority='high'>
-              <App {...props} />
-            </StyleProvider>
-          ),
+        (
+          <StyleProvider cache={cache} hashPriority='high'>
+            <App {...props} />
+          </StyleProvider>
+        ),
       })
 
     const initialProps = await Document.getInitialProps(ctx)
@@ -39,10 +39,8 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head />
         <body>
           <Main />
-          <NextScript />
         </body>
       </Html>
     )
