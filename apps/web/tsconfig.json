@@ -1,5 +1,6 @@
 {
   "extends": "tsconfig/nextjs.json",
+  "moduleResolution": "node",
   "compilerOptions": {
     "plugins": [
       {
@@ -12,7 +13,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "build/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
