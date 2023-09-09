@@ -73,7 +73,7 @@ export class WalletController {
         throw new Error('Wallet not found');
       }
 
-      return {
+      return res.status(HttpStatus.OK).send({
         status: 'success',
         message: 'Wallet retrieved successfully',
         data: {
@@ -82,7 +82,7 @@ export class WalletController {
           balance: wallet.wallet.balance,
           date: wallet.wallet.createdAt,
         },
-      };
+      });
     } catch (err) {
       return res.status(HttpStatus.NOT_FOUND).send({
         status: 'error',
