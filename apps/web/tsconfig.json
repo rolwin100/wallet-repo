@@ -1,6 +1,5 @@
 {
-  "extends": "tsconfig/nextjs.json",
-  "moduleResolution": "node",
+  "extends": "tsconfig/base.json",
   "compilerOptions": {
     "plugins": [
       {
