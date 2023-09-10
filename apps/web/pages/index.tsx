@@ -25,6 +25,9 @@ const Home: React.FC = () => {
         setState((prevState) => ({ ...prevState, loading: false }));
       });
     }
+    else{
+      setState((prevState) => ({ ...prevState, loading: false }));
+    }
   }, [])
   return (
     <div>
