@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app'
 
 import 'antd/dist/reset.css'
-import "antd/dist/antd.css";
 import '../styles/global.css'
 import AppLayout from '../components/AppLayout'
 import type { ReactElement, ReactNode } from 'react';
