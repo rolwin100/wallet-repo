@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Spin } from 'antd';
 import WalletDetails from '../components/Wallet/WalletDetails';
 import WalletForm from '../components/Wallet/WalletForm';
-import { API_URL } from '../constants';
+import { NEXT_PUBLIC_API_URL } from '../constants';
 
 
 const Home: React.FC = () => {
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
     console.log(walletIdLocalStorage, "walletIdLocalStorage")
     if (walletIdLocalStorage) {
       setState((prevState) => ({ ...prevState, loading: true }));
-      fetch(`${API_URL}/wallet/${walletIdLocalStorage}`).then((res) => res.json()).then(({ data }) => {
+      fetch(`${NEXT_PUBLIC_API_URL}/wallet/${walletIdLocalStorage}`).then((res) => res.json()).then(({ data }) => {
         if (data)
           setState((prevState) => ({ ...prevState, walletId: walletIdLocalStorage, walletData: data }));
       }).finally(() => {
