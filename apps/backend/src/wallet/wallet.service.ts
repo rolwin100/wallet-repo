@@ -49,7 +49,15 @@ export class WalletService {
       .take(limit)
       .skip(skip)
       .getMany();
-    return transactions;
+
+    const transactionsCount = await this.transactionRepository
+      .createQueryBuilder('transaction')
+      .where('transaction.wallet= :id', { id: query.walletId })
+      .take(limit)
+      .skip(skip)
+      .getCount();
+
+    return { transactions, transactionsCount };
   }
 
   async findOne(id: number) {

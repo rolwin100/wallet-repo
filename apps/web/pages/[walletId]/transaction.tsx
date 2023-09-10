@@ -29,6 +29,7 @@ const Transaction: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
     const [data, setData] = useState<DataType[]>();
     const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0);
     const router = useRouter();
     const walletId = router.query.walletId;
     const [tableParams, setTableParams] = useState<TableParams>({
@@ -53,28 +54,28 @@ const Transaction: React.FC = () => {
     ];
 
     const fetchData = () => {
-        if(!walletId) return;
+        if (!walletId) return;
         setLoading(true);
         fetch(`${NEXT_PUBLIC_API_URL}/wallet/transactions?walletId=${walletId}&skip=${skip}&limit=10`)
             .then((res) => res.json())
-            .then(({ data }) => {
+            .then(({ data, count }) => {
                 setData(data);
                 setLoading(false);
                 setTableParams({
                     ...tableParams,
                     pagination: {
                         ...tableParams.pagination,
-                        total: 100,
+                        total: count,
                         // 200 is mock data, you should read it from server
                         // total: data.totalCount,
                     },
                 });
-            });
+            }).catch((err) => { });
     };
 
     useEffect(() => {
         fetchData();
-    }, [JSON.stringify(tableParams), walletId]);
+    }, [JSON.stringify(tableParams), walletId, count]);
 
     const handleTableChange = (
         pagination: TablePaginationConfig,
@@ -101,7 +102,7 @@ const Transaction: React.FC = () => {
             {isModalOpen && <TransactionModal
                 isModalOpen={isModalOpen}
                 handleOk={() => setIsModalOpen(false)}
-                handleCancel={() => setIsModalOpen(false)}
+                handleCancel={() => { setIsModalOpen(false); setCount((prevCount) => (prevCount + 1)) }}
             />}
             <Table
                 columns={columns}

@@ -50,7 +50,8 @@ export class WalletController {
       return res.status(HttpStatus.OK).send({
         status: 'success',
         message: 'Transactions retrieved successfully',
-        data: result,
+        data: result.transactions,
+        count: result.transactionsCount,
       });
     } catch (err) {
       return res.status(HttpStatus.NOT_FOUND).send({
