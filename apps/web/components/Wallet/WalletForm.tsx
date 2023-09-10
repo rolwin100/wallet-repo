@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Typography, Form, Input } from 'antd';
+import { API_URL } from '../../constants';
 
 
 const { Title, Text } = Typography;
@@ -7,7 +8,7 @@ const onFinish = (values: any) => {
     console.log('Success:', values);
     values.balance = parseFloat(values.balance) || 0;
     // api call to create wallet
-    fetch('http://localhost:8000/wallet/setup', {
+    fetch(`${API_URL}/wallet/setup`, {
         method: 'POST',
         body: JSON.stringify(values),
         headers: {
