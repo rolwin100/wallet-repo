@@ -10,11 +10,11 @@ import { Transaction } from 'src/wallet/entities/transaction.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'dpg-cjtdfc5htt0c73c6r8p0-a.oregon-postgres.render.com',
+      host: process.env.DB_HOST || 'localhost',
       port: 5432,
-      username: 'wallet_wehx_user',
-      password: 'CqJ1jGWCTtagF7HKXVsSCoRNRKZs5BZk',
-      database: 'wallet_wehx',
+      username: process.env.DB_USER || 'root',
+      password: process.env.DB_PASS || 'root',
+      database: process.env.DB_NAME || 'test',
       entities: [Wallet, Transaction],
       synchronize: true,
       ssl: true,
