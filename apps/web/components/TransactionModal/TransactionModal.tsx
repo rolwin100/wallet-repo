@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Radio, Form, Input } from 'antd';
+import { Modal, Radio, Form, Input, message } from 'antd';
 import { NEXT_PUBLIC_API_URL } from "../../constants";
 import { useRouter } from "next/router";
 
@@ -34,7 +34,6 @@ const TransactionModal: React.FC<PropTypes> = ({
     }
 
     const onFinish = (values: any) => {
-        console.log('Success:', values);
         values.amount = Number(values.amount);
         if (values.transactionType === 'debit') {
             values.amount = -Math.abs(values.amount);
@@ -53,6 +52,8 @@ const TransactionModal: React.FC<PropTypes> = ({
                 // window.location.reload();
                 handleCancel()
             }
+        }).catch((e)=>{
+            message.error(e.message)
         })
     };
 
