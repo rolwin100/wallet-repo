@@ -94,10 +94,15 @@ const Transaction: React.FC = () => {
             setData([]);
         }
     };
+
+    const exportCSV = () => {
+        window.open(`${NEXT_PUBLIC_API_URL}/wallet/${walletId}/transactions/export`)
+    };
     return (
         <div>
             <div style={{ display: "flex" }}>
                 <Title level={3} style={{ flexGrow: 1 }}>Transaction</Title>
+                <Button type="primary" onClick={() => exportCSV()} style={{marginRight: 12}}>Export CSV</Button>
                 <Button type="primary" onClick={() => setIsModalOpen(true)}>Create Transaction</Button>
             </div>
             {isModalOpen && <TransactionModal

@@ -117,4 +117,12 @@ export class WalletController {
   remove(@Param('id') id: string) {
     return this.walletService.remove(+id);
   }
+
+  @Get('/:id/transactions/export')
+  async exportTranscationCsv(@Res() res, @Param('id') id: string) {
+    const csv = await this.walletService.exportTranscationCsv(id);
+    res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+    res.set('Content-Type', 'text/csv');
+    return res.status(HttpStatus.OK).attachment('data.csv').send(csv);
+  }
 }

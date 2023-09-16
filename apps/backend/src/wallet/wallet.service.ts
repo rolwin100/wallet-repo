@@ -5,6 +5,7 @@ import { Wallet } from './entities/wallet.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Transaction } from './entities/transaction.entity';
+import { Parser } from 'json2csv';
 
 @Injectable()
 export class WalletService {
@@ -40,8 +41,6 @@ export class WalletService {
     if (!wallet) {
       throw new Error('Wallet not found');
     }
-
-    console.log(limit, skip);
 
     const transactions = await this.transactionRepository
       .createQueryBuilder('transaction')
@@ -115,5 +114,18 @@ export class WalletService {
 
   remove(id: number) {
     return `This action removes a #${id} wallet`;
+  }
+
+  async exportTranscationCsv(id: string) {
+    const data = await this.transactionRepository
+      .createQueryBuilder('transaction')
+      .where('transaction.wallet= :id', { id })
+      .getMany();
+
+    const json2csv = new Parser({
+      fields: ['id', 'amount', 'description', 'createdAt'],
+    });
+    const csv = json2csv.parse(data);
+    return csv;
   }
 }
