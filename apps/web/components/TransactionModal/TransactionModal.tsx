@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Radio, Form, Input, message } from 'antd';
 import { NEXT_PUBLIC_API_URL } from "../../constants";
 import { useRouter } from "next/router";
+import { patch } from "../../utils/api";
 
 
 
@@ -38,19 +39,13 @@ const TransactionModal: React.FC<PropTypes> = ({
         if (values.transactionType === 'debit') {
             values.amount = -Math.abs(values.amount);
         }
-        fetch(`${NEXT_PUBLIC_API_URL}/wallet/${walletId}`, {
-            method: 'PATCH',
-            body: JSON.stringify({
-                amount: values.amount,
-                description: values.description
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
+        patch(`${NEXT_PUBLIC_API_URL}/wallet/${walletId}`,{
+            amount: values.amount,
+            description: values.description
         }).then((res) => res.json()).then(({ data }) => {
             if (data) {
-                // window.location.reload();
                 handleCancel()
+                message.success('Transaction created successfully')
             }
         }).catch((e)=>{
             message.error(e.message)
@@ -71,7 +66,7 @@ const TransactionModal: React.FC<PropTypes> = ({
                 <Form.Item<FieldType>
                     label="Description"
                     name="description"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    rules={[{ required: true, message: 'Please input your description' }]}
                 >
                     <Input />
                 </Form.Item>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Typography, Form, Input } from 'antd';
 import { NEXT_PUBLIC_API_URL } from '../../constants';
+import { post } from '../../utils/api';
 
 
 const { Title, Text } = Typography;
@@ -8,13 +9,7 @@ const onFinish = (values: any) => {
     console.log('Success:', values);
     values.balance = parseFloat(values.balance) || 0;
     // api call to create wallet
-    fetch(`${NEXT_PUBLIC_API_URL}/wallet/setup`, {
-        method: 'POST',
-        body: JSON.stringify(values),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
-    }).then((res) => res.json()).then(({ data }) => {
+    post(`${NEXT_PUBLIC_API_URL}/wallet/setup`, values).then((res) => res.json()).then(({ data }) => {
         console.log(data);
         if (data) {
             localStorage.setItem('walletId', data.id);

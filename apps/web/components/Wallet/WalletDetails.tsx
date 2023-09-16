@@ -20,20 +20,20 @@ const WalletDetails: React.FC<WalletDetailsProps> = ({ loading, walletData }) =>
     return (
         <div>
             <Title level={3}>Wallet Details</Title>
-            {!loading ? <div>
+            {!loading ? <div >
                 <div>
-                    <Text strong>Wallet name:</Text>
+                    <Text strong>Wallet name: </Text>
                     <Text>{walletData?.name}</Text>
                 </div>
                 <div>
-                    <Text strong>Wallet balance:</Text>
+                    <Text strong>Wallet balance: </Text>
                     <Text>{walletData?.balance}</Text>
                 </div>
                 <div>
-                    <Text strong>Wallet Date:</Text>
+                    <Text strong>Wallet Date: </Text>
                     <Text>{new Date(walletData?.date).toLocaleDateString("en-US", options)}</Text>
                 </div>
-                <Button type="primary" onClick={transaction}>Show transaction</Button>
+                <Button type="primary" onClick={transaction} style={{marginTop: 23}}>Show transaction</Button>
             </div> : <Spin />}
         </div>
     )

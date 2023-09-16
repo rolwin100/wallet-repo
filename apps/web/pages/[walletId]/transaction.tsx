@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, message } from 'antd';
 import TransactionModal from '../../components/TransactionModal/TransactionModal';
 import { Table } from 'antd';
 import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import type { FilterValue, SorterResult } from 'antd/es/table/interface';
 import { NEXT_PUBLIC_API_URL } from '../../constants';
 import { useRouter } from 'next/router';
+import { get } from '../../utils/api';
 const { Title } = Typography;
 interface DataType {
     name: {
@@ -56,7 +57,7 @@ const Transaction: React.FC = () => {
     const fetchData = () => {
         if (!walletId) return;
         setLoading(true);
-        fetch(`${NEXT_PUBLIC_API_URL}/wallet/transactions?walletId=${walletId}&skip=${skip}&limit=10`)
+        get(`${NEXT_PUBLIC_API_URL}/wallet/transactions?walletId=${walletId}&skip=${skip}&limit=10`)
             .then((res) => res.json())
             .then(({ data, count }) => {
                 setData(data);
@@ -66,11 +67,11 @@ const Transaction: React.FC = () => {
                     pagination: {
                         ...tableParams.pagination,
                         total: count,
-                        // 200 is mock data, you should read it from server
-                        // total: data.totalCount,
                     },
                 });
-            }).catch((err) => { });
+            }).catch((err) => { 
+                message.error(err.message)
+            });
     };
 
     useEffect(() => {
