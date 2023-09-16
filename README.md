@@ -14,13 +14,13 @@ Install the packages
 npm install
 ```
 
-## Configure environment for Backend
+## Configure environment for Backend & frontend
 
 ### Backend env configuration
 
 Create a `.env` file inside apps/backend folder and set environment variables found in the `apps/backend/.env.example` file.
 
-The backend is written with nestjs. The reason for this is nestjs has few cool out of the box features and the scafolding becomes easy. 
+The backend is written with nestjs. The reason for this is nestjs has few cool out of the box features and the scafolding becomes easy. We are using postgresql for the database and Typeorm or the ORM.
 
 ### Frontend env configuration
 
@@ -30,8 +30,11 @@ Create a `.env` file inside `apps/web` folder and set environment variables foun
 ## Run the dev env
 
 ```sh
-npm start
+npm run dev
 ```
 
-
 This will start the backend and frontend repo on 8000 and 3000 port.
+
+## The deployment is done with render.com
+
+The reason for using render.com is because it has a free tier.

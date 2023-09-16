@@ -5,9 +5,11 @@ import { WalletModule } from 'src/wallet/wallet.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Wallet } from 'src/wallet/entities/wallet.entity';
 import { Transaction } from 'src/wallet/entities/transaction.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST || 'localhost',
@@ -17,7 +19,7 @@ import { Transaction } from 'src/wallet/entities/transaction.entity';
       database: process.env.DB_NAME || 'test',
       entities: [Wallet, Transaction],
       synchronize: true,
-      ssl: true,
+      ssl: !!process.env.DB_SSL,
     }),
     WalletModule,
   ],
