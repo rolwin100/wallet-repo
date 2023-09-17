@@ -24,6 +24,8 @@ interface TableParams {
     pagination?: TablePaginationConfig;
     sortField?: string;
     sortOrder?: string;
+    order?: string;
+    field?: string;
     filters?: Record<string, FilterValue>;
 }
 const Transaction: React.FC = () => {
@@ -44,20 +46,44 @@ const Transaction: React.FC = () => {
         {
             title: 'Description',
             dataIndex: 'description',
-            sorter: true,
             width: '20%',
         },
         {
             title: 'Amount',
             dataIndex: 'amount',
+            sorter: true,
+            width: '20%',
+        },
+        {
+            title: 'Created at',
+            dataIndex: 'createdAt',
+            sorter: true,
             width: '20%',
         },
     ];
 
     const fetchData = () => {
         if (!walletId) return;
+        let sortAmount = '';
+        let sortDate = '';
         setLoading(true);
-        get(`${NEXT_PUBLIC_API_URL}/wallet/transactions?walletId=${walletId}&skip=${skip}&limit=10`)
+        if(tableParams.order === 'ascend'){
+            if(tableParams.field === 'amount'){
+                sortAmount = 'ASC'
+            }
+            if(tableParams.field === 'createdAt'){
+                sortDate = 'ASC'
+            }
+        }
+        if(tableParams.order === 'descend'){
+            if(tableParams.field === 'amount'){
+               sortAmount = 'DESC'
+            }
+            if(tableParams.field === 'createdAt'){
+                sortDate = 'DESC'
+            }
+        }
+        get(`${NEXT_PUBLIC_API_URL}/wallet/transactions?walletId=${walletId}&skip=${skip}&limit=10&sortAmount=${sortAmount}&sortDate=${sortDate}`)
             .then((res) => res.json())
             .then(({ data, count }) => {
                 setData(data);
@@ -87,13 +113,15 @@ const Transaction: React.FC = () => {
             pagination,
             filters,
             ...sorter,
-        });
+        } as any);
 
         // `dataSource` is useless since `pageSize` changed
         if (pagination.pageSize !== tableParams.pagination?.pageSize) {
             setData([]);
         }
     };
+
+    console.log(tableParams, "tableParams")
 
     const exportCSV = () => {
         window.open(`${NEXT_PUBLIC_API_URL}/wallet/${walletId}/transactions/export`)

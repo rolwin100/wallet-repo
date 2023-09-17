@@ -33,6 +33,8 @@ export class WalletService {
   async getAllTransaction(query) {
     const limit = query.limit || 10;
     const skip = query.skip || 0;
+    const sortAmount = query.sortAmount;
+    const sortDate = query.sortDate;
     console.log(query);
     const wallet = await this.walletRepository.findOne({
       where: { id: query.walletId },
@@ -42,12 +44,21 @@ export class WalletService {
       throw new Error('Wallet not found');
     }
 
-    const transactions = await this.transactionRepository
+    const transRepo = this.transactionRepository
       .createQueryBuilder('transaction')
       .where('transaction.wallet= :id', { id: query.walletId })
       .take(limit)
-      .skip(skip)
-      .getMany();
+      .skip(skip);
+
+    if (sortAmount) {
+      transRepo.orderBy('transaction.amount', sortAmount);
+    }
+
+    if (sortDate) {
+      transRepo.orderBy('transaction.createdAt', sortDate);
+    }
+
+    const transactions = await transRepo.getMany();
 
     const transactionsCount = await this.transactionRepository
       .createQueryBuilder('transaction')
